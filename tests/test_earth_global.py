@@ -77,7 +77,9 @@ def main():
                 assert page.evaluate('GeoidAtlas.getEarthGeoidState().exaggeration')==10000
                 page.click('[data-earth-global="sources"]')
                 text=page.locator('#dialog').inner_text()
-                assert 'EGM2008' in text and '65,160' in text and '1°' in text and '2.5분' in text
+                assert 'EGM2008' in text and '자료는 어디에서 왔나요?' in text and '실제 비율 1×' in text
+                assert all(term not in text for term in ['해상도','65,160','1°','2.5분','SHA-256','단위 법선'])
+                assert page.locator('#dialog .source-guide[data-source-body="earth"]').count()==1
                 assert page.locator('#dialog a[href="https://cdn.proj.org/us_nga_README.txt"]').count()==1
                 page.click('[data-action="close-dialog"]')
                 for kind in ['concept','help','data']:
