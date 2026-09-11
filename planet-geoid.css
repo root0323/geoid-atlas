@@ -1,0 +1,35 @@
+/* Scope only the four data-based planetary surfaces. Earth map is unchanged. */
+.planet-geoid-active .scene-top{max-width:calc(100% - 340px)}
+.planet-geoid-active .scene-subtitle{max-width:100%;color:#96b6be}
+.planet-geoid-panel .detail-top{margin-bottom:16px;color:#80cbbc;font-size:9px}
+.planet-geoid-panel .detail-heading{margin-bottom:12px}
+.pg-model{font:11px/1.7 var(--mono);color:#c3d5dc;margin-bottom:22px}
+.pg-scale{border-top:1px solid #6a8b9936;padding-top:17px}
+.pg-scale .range-label{font-size:11px;align-items:center}
+#planetScaleValue{font-size:16px;color:#93edd6}
+.pg-actions{display:flex;gap:7px;margin-top:0}
+.pg-actions button{border:1px solid #526c7866;border-radius:5px;padding:7px 10px;font-size:10px;color:#b6ced6;flex:1}
+.pg-actions button:hover,.pg-actions button[aria-pressed=true]{border-color:#6ad8bd;background:#387c6830;color:#a8eedc}
+.pg-sample{font:10px/1.9 var(--mono);color:#91acba;margin:15px 0 7px;min-height:20px}
+.pg-source-button{margin-top:12px!important;border-color:#517b7866!important;color:#b2e4d8!important}
+.pg-options{margin-top:18px!important}
+.pg-caveat{line-height:1.9!important;font-size:10px!important;color:#8aa3b1!important;margin-bottom:0}
+.pg-loading{font-size:12px;line-height:1.9;color:#a6bcc6;margin:14px 0}
+.pg-hash{margin-top:20px;color:#9bb2bb;font-size:11px}.pg-hash code{display:block;overflow-wrap:anywhere;padding:12px 0;font-size:10px}
+@media(max-width:600px){
+ .planet-geoid-active .scene-top{top:75px;max-width:calc(100% - 36px)}
+ .planet-geoid-active .scene-top h2{font-size:17px}
+ .planet-geoid-active .right-panel.planet-geoid-panel{bottom:75px;max-height:32dvh;padding:12px 15px;background:#0d1926f5}
+ .planet-geoid-panel .detail-heading{display:none}
+ .planet-geoid-panel .detail-top{margin-bottom:7px;font-size:8px}
+ .pg-model{font-size:10px;margin-bottom:8px}
+ .pg-scale{padding-top:9px}
+ .pg-scale .range-label{font-size:10px;margin-bottom:0}
+ #planetScaleValue{font-size:13px}
+ .pg-scale input[type=range]{margin:9px 0 11px}
+ .pg-actions button{font-size:10px;padding:6px}
+ .pg-sample{font-size:8px;line-height:1.6;margin:8px 0 0;min-height:0}
+ .planet-geoid-panel .pg-source-button{padding:8px!important;font-size:10px!important;margin-top:8px!important}
+ .planet-geoid-panel .mobile-detail-toggle{padding-top:6px;font-size:8px}
+}
+@media(max-height:600px) and (min-width:601px){.pg-model{margin-bottom:9px}.pg-scale{padding-top:9px}.planet-geoid-panel .detail-heading{margin-bottom:8px}.planet-geoid-panel .detail-top{margin-bottom:10px}.pg-caveat{display:none}}
