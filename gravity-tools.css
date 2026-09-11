@@ -1,0 +1,44 @@
+/* Map workspace tabs and compact gravity inspector. */
+.map-workspace-tabs{display:flex;gap:3px;margin:-3px -2px 10px;border-bottom:1px solid #dce6e9;padding-bottom:8px}
+.map-workspace-tabs button{flex:1;min-width:0;padding:8px 3px;border-radius:6px;color:#6b828c;font-size:12px;font-weight:650}
+.map-workspace-tabs button[aria-selected='true']{background:#e9f5f0;color:#117761}
+.map-workspace-tabs button:focus-visible,.gravity-tabs button:focus-visible{outline:2px solid #177d6b;outline-offset:2px}
+.gravity-tabs{display:flex;gap:4px;margin:0 0 9px}
+.gravity-tabs button{flex:1;min-width:0;padding:8px 2px;font-size:10px;border:1px solid #d7e4e7;border-radius:6px;color:#5d7783;background:#fff}
+.gravity-tabs button[aria-selected='true']{color:#116f5e;border-color:#88bba9;background:#ebf7f0;font-weight:650}
+.gravity-region{display:flex;align-items:center;gap:9px;color:#6a818a;font-size:10px}
+.gravity-region select{flex:1;min-width:0;max-width:100%;border:1px solid #d7e3e6;border-radius:5px;background:white;color:#294e5d;padding:5px 6px;font-size:10px}
+.gravity-caption{font-size:9px;line-height:1.65;color:#748995;margin:8px 0 0}
+body.gravity-map-active #modelControls .model-tabs,body.gravity-map-active #modelLoad{display:none!important}
+body.gravity-map-active #modelControls .density-label{margin-top:9px}
+body.gravity-map-active #mapNetworkStatus{top:310px!important}
+body.gravity-map-active #mapSettingsPopover>:not(.map-popover-head):not(#gravitySettings){display:none!important}
+#gravitySettings{color:#496574;font-size:11px;line-height:1.75}
+#gravitySettings label{display:block;margin:9px 0 5px}
+#gravitySettings input{width:100%;padding:8px 10px;border:1px solid #cddde2;border-radius:6px;background:white;color:#284452;font:12px var(--mono)}
+#gravitySettings p{font-size:10px;color:#6b8089}
+#gravitySettings button{width:100%;padding:8px;border:1px solid #b7d5ca;border-radius:6px;background:#eff8f3;color:#15735e;margin-top:12px}
+#pointPopup .gravity-result>div{margin:8px 0}
+#pointPopup .gravity-result dd{font-size:14px;color:#256757}
+#pointPopup .gravity-result .gravity-current{background:#eff8f4;margin-inline:-8px;padding:7px 8px;border-radius:6px}
+#pointPopup .gravity-result dt small{display:block;font-size:8px;color:#718b91}
+#pointPopup .gravity-pending{font-size:10px;color:#92743e}
+#pointPopup .gravity-note{font-size:9px;line-height:1.65;color:#6d828e;margin:9px 0}
+#pointPopup .gravity-warn{font-size:10px;line-height:1.7;color:#966221;background:#fff8e8;border-radius:5px;padding:8px;margin:8px 0}
+#pointPopup .gravity-estimate{width:100%;padding:8px 5px;border:1px solid #b4d7ca;border-radius:6px;color:#14735c;background:#edf8f2;font-size:10px}
+#pointPopup .gravity-estimate:disabled{opacity:.6;cursor:wait}
+#pointPopup .gravity-extra{border-top:1px solid #dde9e8;margin-top:10px;padding-top:9px;color:#57707c;font-size:10px}
+#pointPopup .gravity-extra summary{cursor:pointer;color:#4e727d;padding:2px 0}
+#pointPopup .gravity-extra label{display:block;margin:9px 0 3px;line-height:1.5}
+#pointPopup .gravity-extra input{width:100%;padding:7px 8px;background:white;border:1px solid #cfdde0;border-radius:5px;color:#294b59;font-size:11px}
+#pointPopup .gravity-extra button{padding:7px 10px;border:1px solid #b5d6c9;border-radius:5px;color:#14745e;background:#eff8f3;margin:8px 3px 0 0}
+#pointPopup .gravity-form-status{font-size:10px;line-height:1.5;color:#90602c;margin:6px 0}
+.gravity-dialog{font-size:13px;line-height:1.85}
+.gravity-dialog h3{font-size:15px;margin:20px 0 8px}
+.gravity-dialog .gravity-equation{font:12px/1.85 var(--mono);padding:12px 14px;background:#f0f6f7;border-radius:7px;color:#2c5364;overflow-wrap:anywhere}
+.gravity-dialog .gravity-stat{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}
+.gravity-dialog .gravity-stat>div{padding:10px;border:1px solid #d8e6e8;border-radius:6px;font-size:11px}
+.gravity-dialog .gravity-stat strong{display:block;font:18px var(--mono);color:#247661;margin-top:3px}
+.gravity-dialog .gravity-links{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-size:12px}
+@media(max-width:600px){.map-workspace-tabs{margin-bottom:8px;padding-bottom:6px}.map-workspace-tabs button{font-size:11px;padding:6px 2px}.gravity-tabs button{font-size:9px;padding:7px 1px}.gravity-caption{font-size:8px}body.gravity-map-active #modelControls{max-width:292px}body.gravity-map-active #mapNetworkStatus{top:291px!important}body.gravity-map-active.has-point-popup #modelControls{visibility:hidden}#app.map-active .data-legend{max-width:190px}}
+@media(max-height:500px){body.gravity-map-active #modelControls .gravity-caption{display:none}body.gravity-map-active #modelControls{max-width:265px}body.gravity-map-active #mapNetworkStatus{top:263px!important}}

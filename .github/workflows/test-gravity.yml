@@ -1,0 +1,49 @@
+name: Test gravity workspace
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'gravity-*.js'
+      - 'gravity-tools.css'
+      - 'index.html'
+      - 'tests/test_gravity.py'
+      - '.github/workflows/test-gravity.yml'
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install rendering fonts and browser test client
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+          python -m pip install 'playwright==1.55.0'
+          if ! command -v google-chrome >/dev/null; then python -m playwright install --with-deps chromium; fi
+      - name: Check JavaScript syntax
+        run: |
+          node --check gravity-math.js
+          node --check gravity-terrain.js
+          node --check gravity-tools.js
+      - name: Verify 997 observed points, missing terrain, region controls, mobile and real DEM
+        run: python tests/test_gravity.py
+      - name: Retain browser report and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gravity-workspace-checks
+          path: |
+            test-results/gravity/
+            gravity-tools.js
+            gravity-tools.css
+            gravity-math.js
+            gravity-terrain.js
+            index.html
+            GRAVITY_DATA.md
+          retention-days: 7
