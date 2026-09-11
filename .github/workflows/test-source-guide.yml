@@ -1,0 +1,39 @@
+name: Test readable source guides
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'source-guide.js'
+      - 'index.html'
+      - 'tests/test_source_guide.py'
+      - '.github/workflows/test-source-guide.yml'
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Korean rendering fonts
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+      - name: Install browser test client
+        run: |
+          python -m pip install 'playwright==1.55.0'
+          if ! command -v google-chrome >/dev/null; then
+            python -m playwright install --with-deps chromium
+          fi
+      - name: Check readable copy, source links, focus and unchanged values
+        run: python tests/test_source_guide.py
+      - name: Retain screenshots and verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: readable-source-guide-checks
+          path: test-results/source-guide/
+          retention-days: 7
