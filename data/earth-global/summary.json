@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "schema": 1,
+    "body": "earth",
+    "model": "EGM2008",
+    "quantity": "geoid undulation",
+    "unit": "m",
+    "isTopography": false,
+    "coverage": "global",
+    "ellipsoid": "WGS84",
+    "semiMajorAxisM": 6378137.0,
+    "inverseFlattening": 298.257223563,
+    "source": "https://cdn.proj.org/us_nga_egm08_25.tif",
+    "sourceDocumentation": "https://cdn.proj.org/us_nga_README.txt",
+    "sourceLicence": "Public Domain",
+    "sourceSha256": "4191d471eefebf24091b56dbc604353cb3b8cf8cc70e448bb9ae56a272bef17a",
+    "modelAuthority": "NGA",
+    "gridDistributor": "PROJ / OSGeo",
+    "nativeSpacingArcMinutes": 2.5,
+    "modelDocumentation": "https://earth-info.nga.mil/index.php?dir=wgs84&action=wgs84",
+    "paper": "Pavlis, Holmes, Kenyon & Factor (2012), The development and evaluation of the Earth Gravitational Model 2008 (EGM2008)",
+    "paperUrl": "https://doi.org/10.1029/2011JB008916",
+    "processing": "Exact native pixel-centre node selection every 24 rows and columns (1 degree); rounded to 0.0001 m for storage. No mean subtraction, no model mixing, no filled data gaps. Longitude wraps; both pole rows retained.",
+    "displayNotice": "Global 1-degree display grid, not the full-resolution original. Browser interpolation is bilinear; geometry is simplified. Map comparisons keep their separate original 2.5-minute grid and KN data.",
+    "referenceNotice": "N is height relative to the WGS84 ellipsoid. Display uses geodetic latitude and outward ellipsoid normals. Only height is visually exaggerated. This is an educational model visualization, not terrain or a precision survey product.",
+    "rangeM": [
+      -106.516,
+      84.6133
+    ],
+    "nativeRangeM": [
+      -106.90872192382812,
+      85.82378387451172
+    ],
+    "generatedAt": "2026-09-11T14:05:02.724413+00:00",
+    "software": {
+      "python": "3.12.14",
+      "numpy": "1.26.4",
+      "rasterio": "1.4.3"
+    }
+  },
+  "grid": {
+    "rows": 181,
+    "cols": 360,
+    "lat0": 90,
+    "lon0": -180,
+    "stepLat": 1,
+    "stepLon": 1,
+    "rowOrder": "north-to-south",
+    "longitudePeriodic": true
+  },
+  "checks": [
+    {
+      "row": 0,
+      "col": 0,
+      "lat": 90,
+      "lon": -180,
+      "valueM": 14.8985,
+      "nativeValueM": 14.8985013961792
+    },
+    {
+      "row": 20,
+      "col": 30,
+      "lat": 70,
+      "lon": -150,
+      "valueM": -1.2681,
+      "nativeValueM": -1.2680933475494385
+    },
+    {
+      "row": 45,
+      "col": 75,
+      "lat": 45,
+      "lon": -105,
+      "valueM": -14.4047,
+      "nativeValueM": -14.404719352722168
+    },
+    {
+      "row": 90,
+      "col": 180,
+      "lat": 0,
+      "lon": 0,
+      "valueM": 17.2251,
+      "nativeValueM": 17.22508430480957
+    },
+    {
+      "row": 120,
+      "col": 20,
+      "lat": -30,
+      "lon": -160,
+      "valueM": 5.6573,
+      "nativeValueM": 5.657348155975342
+    },
+    {
+      "row": 140,
+      "col": 290,
+      "lat": -50,
+      "lon": 110,
+      "valueM": -14.9832,
+      "nativeValueM": -14.98324203491211
+    },
+    {
+      "row": 175,
+      "col": 359,
+      "lat": -85,
+      "lon": 179,
+      "valueM": -35.5223,
+      "nativeValueM": -35.52234649658203
+    },
+    {
+      "row": 180,
+      "col": 180,
+      "lat": -90,
+      "lon": 0,
+      "valueM": -30.15,
+      "nativeValueM": -30.14996910095215
+    },
+    {
+      "row": 53,
+      "col": 307,
+      "lat": 37,
+      "lon": 127,
+      "valueM": 23.4649,
+      "nativeValueM": 23.46487045288086
+    }
+  ],
+  "sourceRaster": {
+    "rows": 4321,
+    "cols": 8640,
+    "transform": [
+      0.041666666666666664,
+      0.0,
+      -180.02083333333334,
+      0.0,
+      -0.041666666666666664,
+      90.02083333333333
+    ],
+    "crs": "EPSG:4979",
+    "tags": {
+      "TIFFTAG_IMAGEDESCRIPTION": "WGS 84 (EPSG:4979) to EGM2008 height (EPSG:3855). Converted from egm08_25.gtx (last modified at 2018/10/08)",
+      "TIFFTAG_DATETIME": "2019:12:27 00:00:00",
+      "TIFFTAG_COPYRIGHT": "Derived from work by NGA. Public Domain",
+      "area_of_use": "World",
+      "target_crs_epsg_code": "3855",
+      "TYPE": "VERTICAL_OFFSET_GEOGRAPHIC_TO_VERTICAL",
+      "AREA_OR_POINT": "Point"
+    }
+  },
+  "outputSha256": "a53e5f9abef382dfe42df791cf8a88d3d9e9ac15a014e743675082e5009ddf2e",
+  "sourceRegionalMaxDifferenceM": 1.5631940186722204e-13,
+  "protectedFilesUnchanged": {
+    "app-v6.html": "ca42849f180f7d0c132532c0c6c54aba5320aae4b11dac3e3cdbae80a5ad6e46",
+    "data/egm2008.json": "0beddd7640f32696852b71f79c4e4cd7a10f0016c7795232dce924e1cce75c6a",
+    "data/egm2008-summary.json": "9d01ccf8291cfacc079d12114837846465f234c0ebe74fcda7d7544a3f836a6f"
+  }
+}
