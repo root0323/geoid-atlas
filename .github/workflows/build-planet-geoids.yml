@@ -6,15 +6,16 @@ on:
       - 'scripts/build_planet_geoids.py'
       - '.github/workflows/build-planet-geoids.yml'
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: planetary-geoid-data
+  cancel-in-progress: true
 jobs:
   science:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -25,10 +26,23 @@ jobs:
           MPLBACKEND: Agg
           OMP_NUM_THREADS: '2'
         run: python scripts/build_planet_geoids.py
+      - name: Commit only validated planetary public data
+        run: |
+          test -s data/planet-geoids/manifest.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/planet-geoids/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Add validated NASA PDS planetary geoid grids and provenance'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
       - name: Retain public data and provenance for validation
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: planetary-geoid-source-data
-          path: planet-build/
+          path: |
+            data/planet-geoids/
+            planet-build/
           retention-days: 7
