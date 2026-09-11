@@ -33,6 +33,55 @@ jobs:
           node --check gravity-tools.js
       - name: Verify 997 observed points, missing terrain, region controls, mobile and real DEM
         run: python tests/test_gravity.py
+      - name: Verify the published gravity workspace on desktop and mobile
+        if: github.ref == 'refs/heads/main'
+        run: |
+          python - <<'PY'
+          import json, shutil, time, urllib.request
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          site='https://root0323.github.io/geoid-atlas/'
+          for attempt in range(20):
+              try:
+                  with urllib.request.urlopen(site+'?verify-gravity='+str(time.time_ns()),timeout=20) as response:
+                      text=response.read().decode('utf-8')
+                  if 'gravity-tools.js' in text:break
+              except Exception:pass
+              time.sleep(5)
+          else:raise RuntimeError('Published gravity loader was not observed')
+          output=Path('test-results/gravity/live');output.mkdir(parents=True,exist_ok=True)
+          report={'status':'running','site':site,'screens':[]};errors=[]
+          with sync_playwright() as pw:
+              browser=pw.chromium.launch(executable_path=shutil.which('google-chrome') or shutil.which('chromium'),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+              for width,height in [(1440,900),(390,844)]:
+                  page=browser.new_page(viewport={'width':width,'height':height},is_mobile=width<600,has_touch=width<600)
+                  page.on('pageerror',lambda e:errors.append(str(e)))
+                  page.goto(site+'?view=gravity&verify='+str(time.time_ns())+'#map',wait_until='domcontentloaded')
+                  page.wait_for_function("window.GeoidAtlas?.gravityVersion==='1.0.0'",timeout=45000)
+                  assert page.locator('#workspace-gravity').get_attribute('aria-selected')=='true'
+                  assert page.evaluate('GeoidAtlas.getGravityState().summary.eligible')==997
+                  page.evaluate('GeoidAtlas.setPointPercent(25);selectDataPoint(2)')
+                  assert '32.728' in page.locator('#pointPopup').inner_text()
+                  page.click('[data-gravity-action="estimate"]')
+                  page.wait_for_function('GeoidAtlas.getGravityResult(2).complete!==null',timeout=45000)
+                  value=page.evaluate('GeoidAtlas.getGravityResult(2)')
+                  assert value['terrainMethod']=='20 km 지형 근사'
+                  assert abs(value['complete']-value['bouguer']-value['terrain'])<1e-9
+                  page.evaluate('GeoidAtlas.setGravityLayer("complete")')
+                  page.wait_for_timeout(10000)
+                  map_state=page.evaluate('GeoidAtlas.getMapState()')
+                  page.screenshot(path=str(output/f'gravity-live-{width}.png'))
+                  report['screens'].append({'width':width,'point':'U거창70','values':value,'map':map_state})
+                  page.click('[data-point-close]');page.click('#workspace-geoid')
+                  page.wait_for_function("GeoidAtlas.getModelState().status==='ready'",timeout=45000)
+                  page.click('[data-model="egm"]');page.click('[data-density="10"]')
+                  assert page.evaluate('GeoidAtlas.getVisiblePointCount()')==479
+                  page.close()
+              browser.close()
+          assert not errors,errors
+          report.update(status='passed',desktopAndMobile=True,realTerrainApplied=True,geoidTabsPreserved=True,pageErrors=errors)
+          (output/'checks.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
       - name: Retain browser report and screenshots
         if: always()
         uses: actions/upload-artifact@v4
