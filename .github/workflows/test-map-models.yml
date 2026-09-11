@@ -1,0 +1,39 @@
+name: Test map models and point density
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'app-v6.html'
+      - 'map-view.*'
+      - 'model-controls.*'
+      - 'data/egm2008*'
+      - 'tests/**'
+      - '.github/workflows/test-map-models.yml'
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser test client
+        run: |
+          python -m pip install 'playwright==1.55.0'
+          if ! command -v google-chrome >/dev/null; then
+            python -m playwright install --with-deps chromium
+          fi
+      - name: Verify EGM values, tabs, fixed-extent sampling, popups and mobile
+        run: python tests/test_models.py
+      - name: Retain browser report and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: geoid-map-browser-checks
+          path: test-results/
+          retention-days: 7
