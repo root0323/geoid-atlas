@@ -1,0 +1,39 @@
+name: Test KN-only Earth and map models
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'earth-kn.js'
+      - 'index.html'
+      - 'tests/test_earth_kn.py'
+      - '.github/workflows/test-earth-kn.yml'
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Korean rendering fonts
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+      - name: Install browser test client
+        run: |
+          python -m pip install 'playwright==1.55.0'
+          if ! command -v google-chrome >/dev/null; then
+            python -m playwright install --with-deps chromium
+          fi
+      - name: Verify regional KN data, no Earth tabs, map models and existing planets
+        run: python tests/test_earth_kn.py
+      - name: Retain screenshots and verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: earth-kn-browser-checks
+          path: test-results/earth-kn/
+          retention-days: 7
