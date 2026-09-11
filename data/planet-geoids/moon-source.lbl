@@ -1,0 +1,103 @@
+PDS_VERSION_ID               = PDS3
+RECORD_TYPE                  = FIXED_LENGTH
+RECORD_BYTES                 = 11520
+FILE_RECORDS                 = 1441
+^IMAGE                       = ("GGGRX_0900C_GEOID_L600.IMG",1)
+INSTRUMENT_HOST_NAME         = {"GRAVITY RECOVERY AND INTERIOR LABORATORY A",
+                                "GRAVITY RECOVERY AND INTERIOR LABORATORY B"}
+TARGET_NAME                  = "MOON"
+INSTRUMENT_NAME              = {"LUNAR GRAVITY RANGING SYSTEM A",
+                                "LUNAR GRAVITY RANGING SYSTEM B"}
+DATA_SET_ID                  = "GRAIL-L-LGRS-5-RDR-V1.0"
+ORIGINAL_PRODUCT_ID          = "GRGM900C_GEOID_TRUNCATE_N=600"
+PRODUCT_ID                   = "GGGRX_0900C_GEOID_L600.IMG"
+PRODUCT_RELEASE_DATE         = 2014-05-19
+DESCRIPTION               = "This data product is a map of the 
+ geoid heights (in m) of the Moon at a resolution of 
+ 8 pix/deg by 8 pix/deg. It is based on a preliminary GRAIL 
+ gravity field of the Moon produced by NASA GSFC. The gravity
+ field is a degree and order 900 spherical harmonic model, which
+ includes the entire mission of GRAIL tracking data. 
+ The field was truncated to degree and order 600 for the
+ expansion in the spatial domain, to reduce remaining artifacts.
+
+ Some details describing this model are:
+   The spherical harmonic coefficients are fully normalized.
+   The reference radius = 1738.0 km
+   The planetary ephemeris is de421 and defines the lunar body-fixed
+       coordinate system.
+   A Kaula type power law constraint is applied to the spherical harmonics
+       coefficients for degrees >600 (3.6e-4/n^2).
+   The weighting of the KBRR data is:
+       0.05 microns/sec in the primary mission
+       0.10 microns/sec in the extended mission up to November 18, 2012
+       1.00 microns/sec in the extended mission after November 18, 2012
+   The weighting of the DSN data is:
+       0.05 microns/sec in the primary mission
+       0.12mm/s in the primary mission
+       0.12mm/s in the extended mission up to November 18, 2012
+       0.50mm/s in the extended mission after November 18, 2012
+
+ The estimated tidal Love number is k2 = 0.024116 +/- 0.000108
+
+ The reference for the GRGM900C gravity field is LEMOINEETAL2014,
+ published in the Geophysical Research Letters with the DOI number
+ 10.1002/2014GL060027 . For additional details on the GRAIL mission,
+ data and methods, see LEMOINEETAL2013.
+
+   Each point gives the Lunar geoid height in meters,
+   on a reference sphere with semi-major-axis = 1738.0 km,
+   GM = 4902.79996708864 km**3/s**2, and zero rotation rate.
+
+"
+
+START_TIME                   = 2012-03-01
+STOP_TIME                    = 2012-12-14
+PRODUCT_CREATION_TIME        = 2013-05-19
+PRODUCER_ID                  = "GSFC LEVEL-2 TEAM"
+
+OBJECT               = IMAGE
+  LINES                      = 1441
+  LINE_SAMPLES               = 2880
+  SAMPLE_TYPE                = "PC_REAL"
+  SAMPLE_BITS                = 32
+  UNIT                       = "METERS"
+  OFFSET                     = 0.0E+00
+  SCALING_FACTOR             = 1.0E+00
+  DESCRIPTION                = "The Digital Map contains
+   values of the geoid height.  The values can be obtained
+   by multiplying the sample in the map by SCALING_FACTOR
+   and then adding OFFSET. "
+END_OBJECT           = IMAGE
+
+OBJECT               = IMAGE_MAP_PROJECTION
+  ^DATA_SET_MAP_PROJECTION     = "DSMAP.CAT"
+  COORDINATE_SYSTEM_TYPE       = "BODY-FIXED ROTATING"
+  COORDINATE_SYSTEM_NAME       = PLANETOCENTRIC
+  MAP_PROJECTION_TYPE          = "SIMPLE CYLINDRICAL"
+  A_AXIS_RADIUS                = 1738.0 <km>
+  B_AXIS_RADIUS                = 1738.0 <km>
+  C_AXIS_RADIUS                = 1738.0 <km>
+  FIRST_STANDARD_PARALLEL      = "N/A"
+  SECOND_STANDARD_PARALLEL     = "N/A"
+  POSITIVE_LONGITUDE_DIRECTION = "EAST"
+  CENTER_LATITUDE              = 0.0 <degree>
+  CENTER_LONGITUDE             = 180.0 <degree>
+  REFERENCE_LATITUDE           = 0.0 <degree>
+  REFERENCE_LONGITUDE          = 0.0 <degree>
+  LINE_FIRST_PIXEL             = 1
+  LINE_LAST_PIXEL              = 1441
+  SAMPLE_FIRST_PIXEL           = 1
+  SAMPLE_LAST_PIXEL            = 2880
+  MAP_PROJECTION_ROTATION      = 0.0 <degree>
+  MAP_RESOLUTION               = 8.0 <pixel/degree>
+  MAP_SCALE                    = 3791.7278 <m/pixel>
+  MAXIMUM_LATITUDE             = 90.0 <degree>
+  MINIMUM_LATITUDE             = -90.0 <degree>
+  EASTERNMOST_LONGITUDE        = 359.875 <degree>
+  WESTERNMOST_LONGITUDE        = 0.0 <degree>
+  LINE_PROJECTION_OFFSET       = 720.0
+  SAMPLE_PROJECTION_OFFSET     = 1439.5
+END_OBJECT           = IMAGE_MAP_PROJECTION
+
+END

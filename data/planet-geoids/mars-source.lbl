@@ -1,0 +1,81 @@
+PDS_VERSION_ID               = PDS3
+RECORD_TYPE                  = FIXED_LENGTH
+RECORD_BYTES                 = 1440
+FILE_RECORDS                 = 180     
+^IMAGE                       = "GGMRO_120_GEOID_90.IMG"
+INSTRUMENT_HOST_NAME         = "MARS RECONNAISSANCE ORBITER"
+TARGET_NAME                  = "MARS" 
+INSTRUMENT_NAME              = "RADIO SCIENCE SUBSYSTEM"
+DATA_SET_ID                  = "MRO-M-RSS-5-SDP-V1.0"
+ORIGINAL_PRODUCT_ID          = "GMM3_GEOID_TRUNCATE_N=90"
+PRODUCT_ID                   = "GMM3_120_GEOID_90.IMG"
+PRODUCT_RELEASE_DATE         = 2016-06-01
+PRODUCER_ID                  = "MRO GRAVSCI TEAM"
+PRODUCER_FULL_NAME           = "ANTONIO GENOVA"
+PRODUCER_INSTITUTION_NAME    = "NASA/GODDARD SPACE FLIGHT CENTER"
+DESCRIPTION                  = "
+ This file contains a digital map of the Mars geoid heights derived from
+ spherical harmonic coefficients of the NASA GMM-3 gravity field. Each
+ point gives the Mars geoid height in m, which is computed with respect to
+ the reference ellipsoid with semi-major-axis = 3396.0 km, 
+ GM = 0.4282837285418775E+05 km**3/s**2, 1/flattening = 196.877360, and
+ rotation rate = 7.088218066303858D-05 rad/s.  The GMM3_120_GEOID_90
+ gravity anomaly map is computed from a truncated GMM-3 solution (from
+ degree 3 up to degree 90).
+
+ The map is produced by Antonio Genova as a postdoctoral scientist at NASA
+ GSFC under the auspices of the MRO Gravity Science Team, and under the
+ direction of M.T. Zuber and F.G. Lemoine.
+ 
+ The reference for the GMM-3 gravity field is GENOVAETAL2016."
+
+START_TIME                   = 1998-03-27T08:00:00.000
+STOP_TIME                    = 2015-03-30T00:00:00.000
+SOFTWARE_NAME                = "HIGEN;V9.0"
+PRODUCT_CREATION_TIME        = 2016-02-12T17:30:00.000
+
+OBJECT               = IMAGE
+  LINES                      = 180
+  LINE_SAMPLES               = 360
+  SAMPLE_TYPE                = PC_REAL
+  SAMPLE_BITS                = 32
+  UNIT                       = METER
+  OFFSET                     = 0.0E+00
+  SCALING_FACTOR             = 1.0E+00
+  DESCRIPTION                = "The Digital Map contains
+   values of the geoid heights. The values can be obtained
+   by multiplying the sample in the map by SCALING_FACTOR
+   and then adding OFFSET."
+END_OBJECT           = IMAGE
+
+OBJECT               = IMAGE_MAP_PROJECTION
+  ^DATA_SET_MAP_PROJECTION     = "DSMAP.CAT"
+  COORDINATE_SYSTEM_TYPE       = "BODY-FIXED ROTATING"
+  COORDINATE_SYSTEM_NAME       = PLANETOCENTRIC
+  MAP_PROJECTION_TYPE          = "SIMPLE CYLINDRICAL"
+  A_AXIS_RADIUS                = 3396.0 <km>
+  B_AXIS_RADIUS                = 3396.0 <km>
+  C_AXIS_RADIUS                = 3396.0 <km>
+  FIRST_STANDARD_PARALLEL      = "N/A"
+  SECOND_STANDARD_PARALLEL     = "N/A"
+  POSITIVE_LONGITUDE_DIRECTION = "EAST"
+  CENTER_LATITUDE              = 0.5 <deg>
+  CENTER_LONGITUDE             = 180.5 <deg>
+  REFERENCE_LATITUDE           = 0.0 <deg>
+  REFERENCE_LONGITUDE          = 0.0 <deg>
+  LINE_FIRST_PIXEL             = 1
+  LINE_LAST_PIXEL              = 180
+  SAMPLE_FIRST_PIXEL           = 1
+  SAMPLE_LAST_PIXEL            = 360
+  MAP_PROJECTION_ROTATION      = 0.0 <deg>
+  MAP_RESOLUTION               = 1.0E+00 <pix/deg>
+  MAP_SCALE                    = 59271.381397 <m/pixel>
+  MAXIMUM_LATITUDE             = 89.5 <deg>
+  MINIMUM_LATITUDE             = -89.5 <deg>
+  EASTERNMOST_LONGITUDE        = 359.5 <deg>
+  WESTERNMOST_LONGITUDE        = 0.5 <deg>
+  LINE_PROJECTION_OFFSET       = -0.5
+  SAMPLE_PROJECTION_OFFSET     = 179.5
+END_OBJECT           = IMAGE_MAP_PROJECTION
+
+END

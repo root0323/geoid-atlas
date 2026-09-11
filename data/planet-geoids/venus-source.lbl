@@ -1,0 +1,39 @@
+PDS_VERSION_ID               = "PDS3"
+LABEL_REVISION_NOTE = "2007-11-16 GEO:slavney Revised longitude limits;"
+
+RECORD_TYPE                  = FIXED_LENGTH
+RECORD_BYTES                 = 82
+FILE_RECORDS                 = 6480
+^ARRAY                       = "GEOIDGRD.DAT"
+
+SPACECRAFT_NAME              = "MAGELLAN"
+TARGET_NAME                  = "VENUS"
+INSTRUMENT_NAME              = "RADIO SCIENCE SUBSYSTEM"
+DATA_SET_ID                  = "MGN-V-RSS-5-GRAVITY-L2-V1.0"
+PRODUCT_ID                   = "GEOIDGRD-DAT"
+PRODUCT_RELEASE_DATE         = 1997-08-01
+DESCRIPTION                  = "This file contains a digital,
+1 X 1 degree resolution grid of the Geoid of Venus.  It is a
+360 x 180 grid from 89.5 to -89.5 degrees latitude, and 240 to
+240 degrees longitude, increasing from west to east.  The geoid 
+anomalies were calculated from the 120th-degree and -order 
+spherical harmonic gravity model, SHG120.  The observation is the 
+Geoid in meters."
+
+OBJECT                    = ARRAY
+  NAME                       = "2-D GRID OF GEOID"
+  INTERCHANGE_FORMAT         = ASCII
+  AXES                       = 2
+  AXIS_ITEMS                 = (180,360)
+  AXIS_NAME                  = ("LATITUDE","LONGITUDE")
+  AXIS_UNIT                  = (DEGREE,DEGREE)
+  AXIS_INTERVAL              = (-1.0,1.0)
+  AXIS_START                 = (89.5,240.0)
+  AXIS_STOP                  = (-89.5,240.0)
+  FORMAT                     = "F8.2"
+  SAMPLE_BITS                = 64
+  DESCRIPTION                = "This is a 2-D grid of the
+  Geoid anomalies of Venus in meters."
+END_OBJECT               = ARRAY
+
+END
