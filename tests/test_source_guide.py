@@ -16,6 +16,12 @@ OUT = ROOT / 'test-results/source-guide'
 OUT.mkdir(parents=True, exist_ok=True)
 BODIES = {'mercury': 'JGMESS160A', 'venus': 'SHG120', 'earth': 'EGM2008', 'moon': 'GRGM900C', 'mars': 'GMM-3'}
 FORBIDDEN = ['해상도', '구면조화', 'SHA-256', 'Taylor', '쌍선형', '단위 법선', '65,160', '2.5분', '격자', 'W₀', 'kN']
+REFERENCE_RADII = {
+    'mercury': (2440000, '반경 2,440 km의 기준구'),
+    'venus': (6051800, '반경 6,051.8 km의 기준구'),
+    'moon': (1738000, '반경 1,738 km의 기준구'),
+    'mars': (3396000, '적도 반경 3,396 km의 기준 타원체'),
+}
 
 
 def main():
@@ -25,7 +31,7 @@ def main():
     if 'source-guide.js' not in index:
         marker = '<script src="./earth-global.js?v=1"><\\/script>'
         assert marker in index, 'Unexpected loader; refusing a blind candidate edit'
-        index = index.replace(marker, marker + '<script src="./source-guide.js?v=1"><\\/script>')
+        index = index.replace(marker, marker + '<script src="./source-guide.js?v=2"><\\/script>')
     class Handler(SimpleHTTPRequestHandler):
         def do_GET(self):
             if urlsplit(self.path).path in ('/', '/index.html'):
@@ -69,6 +75,19 @@ def main():
                     assert model in text and '원자료' in text
                     assert all(word not in text for word in FORBIDDEN), text
                     assert guide.locator('h3').all_text_contents() == ['자료는 어디에서 왔나요?', '이 그림은 무엇을 보여주나요?', '볼 때 알아두세요', '출처 확인하기']
+                    reference = guide.locator('.source-reference')
+                    if body == 'earth':
+                        assert reference.count() == 0, 'Earth explanation is outside the requested change'
+                    else:
+                        radius_m, wording = REFERENCE_RADII[body]
+                        assert before['meta']['referenceRadiusM'] == radius_m
+                        assert reference.count() == 1 and wording in reference.inner_text()
+                        if body == 'mars':
+                            assert '기준구' not in reference.inner_text()
+                            assert '납작한 모양' in reference.inner_text()
+                        if body == 'venus':
+                            assert '그림의 바탕' in reference.inner_text()
+                            assert '공식적인 높이 0 기준이라는 뜻은 아닙니다' in reference.inner_text()
                     assert '실제 비율 1×' in text and '중력의 세기를 비교하지' in text
                     assert len(text) < 1500
                     assert guide.locator('.formula-card, code, table').count() == 0
@@ -120,7 +139,7 @@ def main():
         assert not errors, errors
         for relative, digest in hashes.items():
             assert hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() == digest
-        report.update(status='passed', allFiveBodies=True, desktopAndMobile=True, plainLanguage=True, noResolutionOrFormulas=True, originalLinksPreserved=True, referenceCaveatsPreserved=True, escapeAndFocus=True, keyboard=True, modelDataUnchanged=True, mapControlsUnchanged=True, pageErrors=errors)
+        report.update(status='passed', allFiveBodies=True, desktopAndMobile=True, plainLanguage=True, noResolutionOrFormulas=True, originalLinksPreserved=True, referenceCaveatsPreserved=True, referenceRadiiMatchData=True, earthReferenceParagraphExcluded=True, escapeAndFocus=True, keyboard=True, modelDataUnchanged=True, mapControlsUnchanged=True, pageErrors=errors)
     finally:
         server.shutdown()
         (OUT / 'checks.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
