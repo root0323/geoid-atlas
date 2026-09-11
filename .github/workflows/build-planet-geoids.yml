@@ -1,0 +1,34 @@
+name: Build planetary geoids
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/build_planet_geoids.py'
+      - '.github/workflows/build-planet-geoids.yml'
+permissions:
+  contents: read
+jobs:
+  science:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned scientific libraries
+        run: python -m pip install 'numpy==1.26.4' 'scipy==1.13.1' 'pyshtools==4.13.1'
+      - name: Acquire PDS products and compute Mercury reference surface
+        env:
+          MPLBACKEND: Agg
+          OMP_NUM_THREADS: '2'
+        run: python scripts/build_planet_geoids.py
+      - name: Retain public data and provenance for validation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: planetary-geoid-source-data
+          path: planet-build/
+          retention-days: 7
