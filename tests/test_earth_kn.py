@@ -66,6 +66,7 @@ def main():
                 assert page.evaluate('GeoidAtlas.getPoints().map(p=>[p.id,p.lat,p.lon,p.h,p.H,p.N,p.kn,p.delta])') == points
                 page.click('[data-earth-kn="sources"]')
                 assert 'KNGeoid18.dat' in page.locator('#dialog').inner_text()
+                page.click('#dialog details summary')
                 assert '9d88e22cb05387c6a07a342fd6b77c4221184d9f636a4b84687319d6dbd351b6' in page.locator('#dialog').inner_text()
                 page.click('[data-action="close-dialog"]')
                 page.evaluate("route('map','earth')")
@@ -108,6 +109,9 @@ def main():
             assert not errors, errors
             browser.close()
         report.update(status='passed',viewports=[1440,390,360],noEarthTabs=True,regionalMask=True,knMeshMatchesOriginal=True,originalDataUnchanged=True,mapTabsPreserved=True,pointDensityPreserved=True,egm2008Unchanged=True,otherPlanetsPreserved=True,pageErrors=errors)
+    except Exception as error:
+        report.update(status='failed',error=str(error),pageErrors=errors)
+        raise
     finally:
         server.shutdown()
         (OUT/'checks.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
