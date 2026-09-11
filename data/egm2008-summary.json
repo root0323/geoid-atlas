@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "schema": 1,
+    "model": "EGM2008",
+    "gridSpacingArcMinutes": 2.5,
+    "unit": "m",
+    "ellipsoid": "WGS84",
+    "interpolation": "four-node bilinear",
+    "source": "https://cdn.proj.org/us_nga_egm08_25.tif",
+    "sourceDocumentation": "https://cdn.proj.org/us_nga_README.txt",
+    "sourceLicence": "Public Domain",
+    "sourceSha256": "4191d471eefebf24091b56dbc604353cb3b8cf8cc70e448bb9ae56a272bef17a",
+    "inputSha256": "ca42849f180f7d0c132532c0c6c54aba5320aae4b11dac3e3cdbae80a5ad6e46",
+    "generatedAt": "2026-09-11T12:10:25.540808+00:00",
+    "software": {
+      "python": "3.12.14",
+      "rasterio": "1.5.1",
+      "numpy": "2.5.3"
+    },
+    "datumNotice": "관측 높이의 수직기준과 EGM2008 기준의 일치를 가정한 잠정 비교입니다. 수직기준·조석계·시점 보정은 적용하지 않았습니다. 잔차를 모델의 공인 정확도로 해석하지 마세요.",
+    "statistics": {
+      "valid": 4778,
+      "mean": 0.24654039632413974,
+      "rmse": 0.26755207604096415,
+      "mae": 0.24692470494792737,
+      "min": -0.24257220249362987,
+      "max": 4.97853761286601,
+      "total": 4787,
+      "missing": 9,
+      "modelAvailable": 4787
+    },
+    "sourceRaster": {
+      "width": 8640,
+      "height": 4321,
+      "crs": "EPSG:4979",
+      "transform": [
+        0.041666666666666664,
+        0.0,
+        -180.02083333333334,
+        0.0,
+        -0.041666666666666664,
+        90.02083333333333
+      ],
+      "tags": {
+        "TIFFTAG_IMAGEDESCRIPTION": "WGS 84 (EPSG:4979) to EGM2008 height (EPSG:3855). Converted from egm08_25.gtx (last modified at 2018/10/08)",
+        "TIFFTAG_DATETIME": "2019:12:27 00:00:00",
+        "TIFFTAG_COPYRIGHT": "Derived from work by NGA. Public Domain",
+        "area_of_use": "World",
+        "target_crs_epsg_code": "3855",
+        "TYPE": "VERTICAL_OFFSET_GEOGRAPHIC_TO_VERTICAL",
+        "AREA_OR_POINT": "Point"
+      },
+      "bandTags": {}
+    }
+  },
+  "regionalGrid": {
+    "rows": 149,
+    "cols": 197,
+    "lat0": 32.916666666666664,
+    "latMax": 39.08333333333333,
+    "lon0": 123.91666666666661,
+    "lonMax": 132.0833333333333,
+    "stepLat": 0.041666666666666664,
+    "stepLon": 0.041666666666666664,
+    "nmin": 14.681516647338867,
+    "nmax": 33.68085861206055,
+    "order": "north-to-south, west-to-east"
+  },
+  "checks": [
+    {
+      "index": 0,
+      "id": "U거창61",
+      "lat": 35.58649477,
+      "lon": 127.76366518,
+      "egm": 27.22801730116105,
+      "observed": 27.40730000000002
+    },
+    {
+      "index": 598,
+      "id": "U나주15",
+      "lat": 35.15836086,
+      "lon": 126.7347875,
+      "egm": 24.217086412799485,
+      "observed": 24.535800000000002
+    },
+    {
+      "index": 1196,
+      "id": "U도암13",
+      "lat": 37.58658755,
+      "lon": 128.53388678,
+      "egm": 27.839743172846777,
+      "observed": 28.162699999999973
+    },
+    {
+      "index": 1794,
+      "id": "U산청68",
+      "lat": 35.33550039,
+      "lon": 127.94204274,
+      "egm": 28.002050088199216,
+      "observed": 28.165899999999993
+    },
+    {
+      "index": 2392,
+      "id": "U안동71",
+      "lat": 36.56183515,
+      "lon": 128.5244383,
+      "egm": 27.885976238414763,
+      "observed": 28.073300000000003
+    },
+    {
+      "index": 2990,
+      "id": "U0878",
+      "lat": 35.4809476,
+      "lon": 127.68900919,
+      "egm": 27.29863668884016,
+      "observed": 27.578099999999978
+    },
+    {
+      "index": 3588,
+      "id": "U0769",
+      "lat": 35.70151028,
+      "lon": 126.78869422,
+      "egm": 23.90813721501573,
+      "observed": 24.124699999999997
+    },
+    {
+      "index": 4186,
+      "id": "U충주00",
+      "lat": 36.98515591,
+      "lon": 127.76540411,
+      "egm": 25.490176103382876,
+      "observed": 25.66669999999999
+    },
+    {
+      "index": 4784,
+      "id": "U회천59",
+      "lat": 34.61722721,
+      "lon": 127.20118443,
+      "egm": 25.92156299768967,
+      "observed": 26.160999999999998
+    }
+  ],
+  "outputSha256": "0beddd7640f32696852b71f79c4e4cd7a10f0016c7795232dce924e1cce75c6a"
+}
