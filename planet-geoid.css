@@ -22,7 +22,7 @@
  .planet-geoid-active .right-panel.planet-geoid-panel{bottom:75px;max-height:32dvh;padding:12px 15px;background:#0d1926f5}
  .planet-geoid-panel .detail-heading{display:none}
  .planet-geoid-panel .detail-top{margin-bottom:7px;font-size:8px}
- .pg-model{font-size:10px;margin-bottom:8px}
+ .planet-geoid-panel .pg-model{display:none}
  .pg-scale{padding-top:9px}
  .pg-scale .range-label{font-size:10px;margin-bottom:0}
  #planetScaleValue{font-size:13px}

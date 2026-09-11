@@ -11,7 +11,7 @@
 <body><main role="status"><h1>GEOID ATLAS</h1><p id="loadStatus">탐색 화면과 관측 자료를 불러오는 중입니다.</p><button id="retry" hidden>다시 불러오기</button><noscript>이 탐색기는 JavaScript를 켜야 이용할 수 있습니다.</noscript></main>
 <script>
 'use strict';
-// Keep the uploaded observations and KN18 dataset byte-for-byte.
+// Preserve all uploaded Earth data. Extensions load in their tested order.
 (async function start(){
  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),30000);
  try{
@@ -19,8 +19,8 @@
   if(!response.ok)throw new Error('HTTP '+response.status);
   let html=await response.text();
   if(!html.includes('const GEOID_DATA=')||!html.includes('window.GeoidAtlas='))throw new Error('앱 파일 확인 실패');
-  html=html.replace('</head>','<meta name="referrer" content="strict-origin-when-cross-origin"><link rel="stylesheet" href="./map-view.css?v=1"><link rel="stylesheet" href="./model-controls.css?v=1"></head>');
-  html=html.replace('</body>','<script src="./map-view.js?v=2"><\/script><script src="./model-controls.js?v=1"><\/script></body>');
+  html=html.replace('</head>','<meta name="referrer" content="strict-origin-when-cross-origin"><link rel="stylesheet" href="./map-view.css?v=1"><link rel="stylesheet" href="./model-controls.css?v=1"><link rel="stylesheet" href="./planet-geoid.css?v=2"></head>');
+  html=html.replace('</body>','<script src="./map-view.js?v=2"><\/script><script src="./model-controls.js?v=1"><\/script><script src="./planet-geoid.js?v=2"><\/script></body>');
   clearTimeout(timeout);document.open();document.write(html);document.close();
  }catch(error){
   clearTimeout(timeout);document.getElementById('loadStatus').textContent='화면을 불러오지 못했습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.';

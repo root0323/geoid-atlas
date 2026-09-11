@@ -105,7 +105,7 @@
   const on=active();document.body.classList.toggle('planet-geoid-active',on);
   if(!on){$('#rightPanel').classList.remove('planet-geoid-panel');return}
   const id=state.selected,item=entry(id),m=item?.data?.meta;
-  $('#sceneTitle').textContent=selectedPlanet().name+' · '+titles[id];
+  $('#sceneTitle').textContent=id==='mars'?'화성 · 아레오이드 편차':titles[id];
   $('#sceneSubtitle').textContent=(m?.model||shortModels[id])+' · '+(item?.status==='ready'?'중력 자료 기반':'자료 로딩');
   $('#sceneHint').hidden=true;
   $('#sceneNotes').innerHTML='<strong>드래그 회전 · 휠 확대 / 축소</strong><br>색상 = 기준면 편차(m) · 산과 계곡의 지형이 아닙니다.';
@@ -134,8 +134,10 @@
   if(state.rotate&&!reduced&&!drag.active)state.lon+=dt*.000028;
   state.formation=Math.min(1,state.formation+dt/900);
   const mobile=w<=600,id=state.selected,d=entry(id)?.data;
-  const radius=Math.min(mobile?w*.31:Math.max(180,w-320)*.32,mobile?h*.20:h*.32)*state.zoom;
-  const cx=(mobile?w*.5:(w-300)*.53)+state.panX,cy=h*(mobile?.39:.50)+state.panY;
+  const panelTop=mobile?$('#rightPanel').offsetTop:h;
+  const low=mobile?panelTop-55:h*.82,high=mobile?132:h*.18;
+  const radius=Math.min(mobile?w*.31:Math.max(180,w-320)*.32,mobile?Math.max(45,(low-high)/2.6):h*.32)*state.zoom;
+  const cx=(mobile?w*.5:(w-300)*.53)+state.panX,cy=(mobile?(high+low)/2:h*.50)+state.panY;
   hitObjects=[{id,x:cx,y:cy,r:radius*1.28,bodyR:radius}];
   if(!d){ctx.save();ctx.strokeStyle='#466472';ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,cy,radius,0,TAU);ctx.stroke();ctx.textAlign='center';ctx.font='12px sans-serif';ctx.fillStyle='#a4bbc7';ctx.fillText(entry(id)?.status==='error'?'자료 로딩 실패 · 다시 불러오기':'NASA PDS 자료 로딩 중',cx,cy);ctx.restore();return}
   const mesh=meshFor(id,mobile),m=d.meta,sc=scales.get(id),gain=sc.value*(1-Math.pow(1-state.formation,3));
@@ -158,7 +160,7 @@
    for(let lon=0;lon<360;lon+=30){const col=Math.round(lon/mesh.step);line(Array.from({length:180/mesh.step+1},(_,i)=>i*(mesh.nlon+1)+col))}
   }
   ctx.strokeStyle='#ffffffa0';ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(cx-4,cy);ctx.lineTo(cx+4,cy);ctx.moveTo(cx,cy-4);ctx.lineTo(cx,cy+4);ctx.stroke();
-  const lx=mobile?18:26,ly=mobile?Math.min(h*.65,cy+radius*1.28+26):h-142,lw=mobile?160:210;
+  const lx=mobile?18:26,ly=mobile?panelTop-30:h-142,lw=mobile?160:210;
   const gradient=ctx.createLinearGradient(lx,0,lx+lw,0);for(let i=0;i<=4;i++)gradient.addColorStop(i/4,color(m.rangeM[0]+(m.rangeM[1]-m.rangeM[0])*i/4,...m.rangeM,1));
   ctx.fillStyle=gradient;ctx.fillRect(lx,ly,lw,5);ctx.font=(mobile?'9':'10')+'px sans-serif';ctx.fillStyle='#b9ccd5';ctx.textAlign='left';ctx.fillText(fmt(m.rangeM[0])+' m',lx,ly+20);ctx.textAlign='right';ctx.fillText(fmt(m.rangeM[1])+' m',lx+lw,ly+20);ctx.textAlign='left';ctx.fillText('N · '+(sc.value===1?'실제 비율 1×':'굴곡 '+sc.value.toLocaleString('ko-KR')+'×'),lx,ly-10);
   ctx.restore();
@@ -173,7 +175,7 @@
  openDialog=function(type){original.openDialog(type);if(type==='concept'||type==='help'){const note=document.createElement('p');note.className='small-notice';note.textContent='추가된 천체 데이터: 수성 JGMESS160A, 금성 SHG120, 화성 GMM-3, 달 GRGM900C. 각 천체의 출처 버튼에서 서로 다른 기준면 정의를 확인하세요. 지구의 전 지구 구체와 가상 소행성은 여전히 개념 모형입니다.';$('#dialog').append(note)}};
  document.addEventListener('click',e=>{const button=e.target.closest('[data-planet-action]');if(!button)return;const action=button.dataset.planetAction,s=scales.get(state.selected);if(action==='sources')openSources();else if(action==='actual')setScale(1);else if(action==='suggested'&&s)setScale(s.suggested);else if(action==='retry'){ensure(state.selected,true);renderUI()}});
  document.addEventListener('input',e=>{if(e.target.id==='planetExaggeration'){const s=scales.get(state.selected);if(s)setScale(Math.exp(Number(e.target.value)/100*Math.log(s.max)))}});
- window.GeoidAtlas.version='0.9.0';
+ window.GeoidAtlas.planetVersion='0.9.0';
  window.GeoidAtlas.getPlanetGeoidState=()=>{const id=state.selected,item=entry(id);return {body:id,active:active(),status:item?.status||'not-loaded',meta:item?.data?.meta||null,grid:item?.data?.grid||null,exaggeration:scales.get(id)?.value||null}};
  window.GeoidAtlas.samplePlanetGeoid=(id,lat,lon)=>{const d=entry(id)?.data;if(!d||!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90)return null;return sample(d,lat,lon)};
  renderUI();
