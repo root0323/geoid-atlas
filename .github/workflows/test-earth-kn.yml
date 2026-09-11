@@ -1,18 +1,22 @@
-name: Test KN-only Earth and map models
+# The historical tests/test_earth_kn.py remains available for the retired view.
+# The active Earth screen now uses global EGM2008; map KN/EGM tests are retained.
+name: Test global Earth and map models
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'earth-kn.js'
+      - 'earth-global.js'
+      - 'earth-global.css'
+      - 'data/earth-global/**'
       - 'index.html'
-      - 'tests/test_earth_kn.py'
+      - 'tests/test_earth_global.py'
       - '.github/workflows/test-earth-kn.yml'
 permissions:
   contents: read
 jobs:
   browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 7
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,12 +32,33 @@ jobs:
           if ! command -v google-chrome >/dev/null; then
             python -m playwright install --with-deps chromium
           fi
-      - name: Verify regional KN data, no Earth tabs, map models and existing planets
-        run: python tests/test_earth_kn.py
+      - name: Verify global source values, display controls, mobile and unchanged map
+        run: python tests/test_earth_global.py
+      - name: Verify the published site after activation
+        if: success()
+        run: |
+          if grep -q 'earth-global.js' index.html; then
+            python - <<'PY'
+          import time, urllib.request
+          url='https://root0323.github.io/geoid-atlas/'
+          for attempt in range(24):
+              try:
+                  with urllib.request.urlopen(url+'?global-geoid-check='+str(time.time_ns()),timeout=20) as r:
+                      html=r.read().decode()
+                  if 'earth-global.js' in html and 'earth-kn.js' not in html:
+                      break
+              except Exception:
+                  pass
+              time.sleep(5)
+          else:
+              raise SystemExit('Published loader was not ready in the verification window')
+          PY
+            TEST_SITE_URL='https://root0323.github.io/geoid-atlas/' python tests/test_earth_global.py
+          fi
       - name: Retain screenshots and verification report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: earth-kn-browser-checks
-          path: test-results/earth-kn/
+          name: global-earth-browser-checks
+          path: test-results/global-earth/
           retention-days: 7
