@@ -116,12 +116,12 @@ def main():
             bad=browser.new_page(viewport={'width':390,'height':844})
             bad.route('**/data/earth-global/egm2008-global.json*',lambda r:r.fulfill(status=503,body='unavailable'))
             bad.goto(site+'?test=failure#geoid/earth',wait_until='domcontentloaded')
-            bad.wait_for_function('GeoidAtlas.getEarthGeoidState().status==="error"',timeout=45000)
+            bad.wait_for_function('window.GeoidAtlas?.getEarthGeoidState?.().status==="error"',timeout=45000)
             assert '가상값으로 대체하지 않습니다' in bad.locator('#rightPanel').inner_text()
             assert bad.evaluate('GeoidAtlas.sampleEarthGeoid(0,0)') is None
             bad.unroute('**/data/earth-global/egm2008-global.json*')
             bad.click('[data-earth-global="retry"]')
-            bad.wait_for_function('GeoidAtlas.getEarthGeoidState().status==="ready"',timeout=45000)
+            bad.wait_for_function('window.GeoidAtlas?.getEarthGeoidState?.().status==="ready"',timeout=45000)
             browser.close()
         assert not errors,errors
         report.update(status='passed',model='EGM2008',coverage='global',grid=dataset['grid'],rangeM=dataset['meta']['rangeM'],sourceHash=dataset['meta']['sourceSha256'],desktopAndMobile=True,sourceChecks=True,seamAndPoles=True,scale1x=True,noSyntheticFallback=True,mapModelTabsPreserved=True,mapPointDensityPreserved=True,originalDataUnchanged=True,otherPlanetsPreserved=True,pageErrors=errors)
