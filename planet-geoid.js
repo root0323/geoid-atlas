@@ -5,7 +5,7 @@
 (function(){
  'use strict';
  const ids=['mercury','venus','moon','mars'];
- const titles={mercury:'수성 등퍼텐셜면',venus:'금성 지오이드 이상',moon:'달 지오이드',mars:'아레오이드 편차'};
+ const titles={mercury:'수성 허미노이드',venus:'금성 아프로디토이드 이상',moon:'달 셀레노이드',mars:'아레오이드 편차'};
  const shortModels={mercury:'JGMESS160A',venus:'SHG120',moon:'GRGM900C',mars:'GMM-3'};
  const original={renderUI,renderDetail,drawGeoid,formGeoid,selectPlanet,openDialog};
  const cache=new Map(), meshes=new Map(), scales=new Map();let lastReadout=0;
