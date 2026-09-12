@@ -54,5 +54,17 @@
   <h3>현재 지역 자료</h3><p>${esc(summary.region)} · 계산 가능한 관측점 ${summary.eligible}개 / 지형 보정값까지 있는 점 ${summary.complete.count}개. 지역 전체를 빈틈없이 측정한 면 자료가 아닌 관측점 자료입니다.</p>
   <button class="secondary full" data-gravity-action="export">현재 지역 전체 중력 계산 CSV 저장</button><p class="gs-source">점 표시 비율이나 현재 단계와 관계없이 CSV는 기존 전체 계산 열을 유지합니다. 보정 입력은 현재 페이지에만 저장됩니다.</p>
  </div>`}
+ // The new tablist owns its keyboard navigation. Scope focus to it: a closed
+ // point popup can retain previous/next buttons with the same layer attribute.
+ root.document?.addEventListener('keydown',event=>{
+  if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+  const tab=event.target.closest?.('#gravityControls .gravity-tabs [data-gravity-layer]');
+  if(!tab||!root.GeoidAtlas?.setGravityStage)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  const i=byLayer(tab.dataset.gravityLayer).number-1;
+  const target=event.key==='Home'?0:event.key==='End'?2:(i+(event.key==='ArrowRight'?1:2))%3;
+  root.GeoidAtlas.setGravityStage(target+1);
+  root.document.querySelector('#gravityControls [data-gravity-layer="'+steps[target].key+'"]').focus();
+ },true);
  root.GeoidGravityStages={version:'1.0.0',steps,byLayer,tabs,caption,progression,resultRows,calculation,navigation,help};
 })(typeof globalThis!=='undefined'?globalThis:this);
