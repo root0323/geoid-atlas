@@ -1,0 +1,45 @@
+/* Numbered, cumulative teaching views. Keep the map and inspector compact. */
+.gravity-tabs button{display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 3px;line-height:1.3;min-height:46px}
+.gravity-tabs button small{display:block;font-size:8px;font-weight:400;margin-top:3px;white-space:nowrap}
+.gs-number{display:inline-grid;place-items:center;width:19px;height:19px;flex-shrink:0;border-radius:50%;background:#edf2f3;color:#687e86;font:600 10px var(--mono)}
+.gravity-tabs button[aria-selected='true'] .gs-number{background:#157d66;color:#fff}
+.gs-summary{margin:0 0 10px;padding:9px 10px;background:#f4f8f7;border-radius:7px;color:#426858}
+.gs-summary-head{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:10px}
+.gs-summary-head button{font-size:9px;color:#176d5a;text-decoration:underline;text-underline-offset:3px;padding:4px 0}
+.gs-summary p{font-size:10px;line-height:1.65;margin:3px 0 4px;color:#30594b}
+.gs-summary>small{display:block;font-size:8px;line-height:1.6;color:#738b83}
+#pointPopup .gs-progress{display:flex;align-items:center;gap:5px;margin:10px 0 12px;font-size:9px;color:#99aaa8}
+.gs-progress span{flex:1;text-align:center;white-space:nowrap;padding:5px 3px;border-bottom:2px solid #e8eeec}
+.gs-progress .gs-reached{color:#207764;border-color:#a8cfc1}
+.gs-progress [aria-current='step']{color:#116b55;font-weight:700;border-color:#14765f}
+.gs-progress i{font-style:normal}
+.gs-row-number{font:10px var(--mono);color:#719a8a;display:inline-block;margin-right:6px}
+#pointPopup .gravity-result dt small{font-size:9px;line-height:1.6;margin-top:4px}
+#pointPopup .gravity-result dd{font-size:15px}
+#pointPopup .gs-operation{display:flex;flex-wrap:wrap;gap:5px;justify-content:space-between;border-top:1px solid #e1ebe7;padding-top:10px;font-size:10px;line-height:1.65;color:#496d60}
+#pointPopup .gs-operation span{font:10px/1.65 var(--mono);color:#28775b}
+#pointPopup .gs-reading{font-size:10px;line-height:1.8;color:#71847d;margin:8px 0 9px}
+#pointPopup .gs-extra-notice{font-size:9px;line-height:1.7;color:#88672d;background:#fff8e7;padding:7px;border-radius:5px}
+.gs-navigation{display:flex;gap:7px;margin:12px 0 8px}
+.gs-navigation button{border:1px solid #bad7cc;background:white;color:#1c7660;border-radius:6px;font-size:10px;padding:9px 7px;min-height:34px;flex:1}
+.gs-navigation .gs-next{flex:2;background:#167a62;color:#fff;border-color:#167a62}
+.gs-navigation button:focus-visible,.gs-summary button:focus-visible{outline:2px solid #14775e;outline-offset:2px}
+.gs-terrain-controls{padding-top:8px;margin-top:8px;border-top:1px solid #dfeae5}
+.gs-curvature{margin-top:10px;padding:8px;background:#f5f7f6;border-radius:5px}
+#dialog .gs-guide{font-size:13px;line-height:1.9}
+.gs-guide .gs-source{font-size:11px;color:#7a958c;line-height:1.8}
+.gs-help-step{display:flex;gap:12px;border:1px solid #d8e5df;border-radius:9px;padding:15px;margin:14px 0}
+.gs-help-current{border-color:#409d82;background:#16795708}
+.gs-help-step>div{min-width:0}
+.gs-help-step .gs-help-number{flex-shrink:0;display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:#197b62;color:white;font:12px var(--mono)}
+#dialog .gs-help-step h3{margin:0 0 4px;font-size:15px}
+#dialog .gs-help-step p{margin:5px 0 9px;line-height:1.9}
+.gs-help-step .gs-help-action{font-size:11px;color:#478f76}
+.gs-help-step small{font-size:10px;color:#7d938a}
+.gs-method{border-top:1px solid #dbe5df;padding:14px 0;font-size:12px}
+.gs-method summary{cursor:pointer;color:#407d66;font-weight:600;padding:2px 0}
+.gs-method p{line-height:1.9}
+body.gravity-map-active #modelControls{max-height:calc(100dvh - 180px);overflow-y:auto;scrollbar-width:thin}
+body.gravity-map-active #mapNetworkStatus{top:409px!important}
+@media(max-width:600px){.gravity-tabs button{gap:3px;font-size:9px;min-height:45px}.gs-summary{padding:7px 8px}.gs-summary p{font-size:9px}.gs-summary>small{font-size:8px}.gs-help-step{padding:12px;gap:8px}.gs-help-step .gs-help-number{width:21px;height:21px}body.gravity-map-active #mapNetworkStatus{top:389px!important}}
+@media(max-height:500px){body.gravity-map-active #modelControls{max-height:calc(100dvh - 108px)}.gs-summary>small{display:none}body.gravity-map-active #mapNetworkStatus{top:auto!important;bottom:95px!important}}
